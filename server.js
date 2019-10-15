@@ -24,13 +24,13 @@ const returnAnimal = (req, res, next) => {
     res.send(answer)
 }
 server.get("/animal/:input", isAnimal, returnAnimal)
-
+//  question 2 -------------------------------------------------------------------------------
 const generateSpread = (req, res, next) => {
-    let floor = req.query.num1;
-    let ceiling = req.query.num2; 
-    ceiling > floor ? next() : sendAnswer(floor, ceiling);
+    let floor = parseInt(req.query.num1);
+    let ceiling = parseInt(req.query.num2); 
+    floor > ceiling ? next() : sendAnswer(res, floor, ceiling);
 }
-const sendAnswer = (floor, ceiling) => {
+const sendAnswer = (res, floor, ceiling) => {
     let arr = mathMods.randomInBetween(floor, ceiling);
     let index = mathMods.randomIndex(arr.length);
     let result = arr[index];
@@ -38,14 +38,14 @@ const sendAnswer = (floor, ceiling) => {
         status: "Success",
         message: `Your random number is ${result}.`
     }
-    server.json(answer)
+    res.json(answer)
 }
 const unavailableSpread = (req, res, next) => {
-    let floor = req.query.num1;
-    let ceiling = req.query.num2; 
+    let floor = parseInt(req.query.num1);
+    let ceiling = parseInt(req.query.num2); 
     let answer = {
         status: "Failure",
-        message: `Your max, ${ceiling}, is greater than your min, ${floor}. Try again.`
+        message: `Your max, ${ceiling}, is lower than your min, ${floor}. Try again.`
     }
     res.json(answer);
 }
