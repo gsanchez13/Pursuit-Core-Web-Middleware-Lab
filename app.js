@@ -27,3 +27,10 @@ const createPara = () => {
     let paragraph = document.createElement("p");
         return paragraph;
 }
+const getRandomNumber = async () => {
+    let floor = document.querySelector("#floor");
+    let ceiling = document.querySelector("#ceiling");
+    let url = `http://localhost:8080/random?num1=${floor.value}&num2=${ceiling.value}`
+    let numObj = await axios.get(url).then((response)=> {return response.data})
+    console.log(numObj)
+}
